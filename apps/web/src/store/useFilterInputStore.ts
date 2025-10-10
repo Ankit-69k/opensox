@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 interface FilterInputState {
-  filters: object;
-  updateFilters: (newFilter: Record<string, string>) => void;
+  filters: Record<string, string | string[]>;
+  updateFilters: (newFilter: Record<string, string | string[]>) => void;
   resetFilters: () => void;
 }
 

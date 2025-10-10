@@ -5,7 +5,7 @@ import { projectService } from "../services/project.service.js";
 import { queryService } from "../services/query.service.js";
 
 const filterPropsSchema = z.object({
-  language: z.string().optional(),
+  language: z.array(z.string()).optional(),
   stars: z
     .object({
       min: z.string().optional(),
@@ -40,9 +40,6 @@ export const projectRouter = router({
     .input(inputSchema)
     .query(async ({ input, ctx }: any): Promise<RepositoryProps[]> => {
       await queryService.incrementQueryCount(ctx.db.prisma);
-      return await projectService.fetchGithubProjects(
-        input.filters as any,
-        input.options as any
-      );
+      return await projectService.fetchGithubProjects(input.filters as any, input.options as any);
     }),
 });

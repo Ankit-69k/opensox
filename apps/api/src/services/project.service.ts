@@ -1,11 +1,6 @@
 import { graphql } from "@octokit/graphql";
 import dotenv from "dotenv";
-import type {
-  FilterProps,
-  RepositoryProps,
-  GraphQLResponseProps,
-  OptionsTypesProps,
-} from "@opensox/shared";
+import type { FilterProps, RepositoryProps, GraphQLResponseProps, OptionsTypesProps } from "@opensox/shared";
 
 dotenv.config();
 

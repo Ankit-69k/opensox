@@ -8,10 +8,7 @@ import Filter from "./Filter";
 import { useFilterStore } from "@/store/useFilterStore";
 import { useFilterInputStore } from "@/store/useFilterInputStore";
 import { useGetProjects } from "@/hooks/useGetProjects";
-import {
-  convertUserInputToApiInput,
-  convertApiOutputToUserOutput,
-} from "@/utils/converter";
+import { convertUserInputToApiInput, convertApiOutputToUserOutput } from "@/utils/converter";
 import { useRouter } from "next/navigation";
 import { useRenderProjects } from "@/store/useRenderProjectsStore";
 import { useProjectsData } from "@/store/useProjectsDataStore";
@@ -58,18 +55,12 @@ export default function FiltersContainer() {
 
   return (
     <div className="fixed top-8 md:top-14 right-4 md:right-2 inset-0 z-50 flex justify-center items-start p-4 lg:p-0">
-      <div
-        className="fixed inset-0 bg-black/20"
-        onClick={() => toggleShowFilters()}
-      />
+      <div className="fixed inset-0 bg-black/20" onClick={() => toggleShowFilters()} />
       <div className="w-full max-w-[90%] md:max-w-[400px] lg:w-80 h-[60vh] lg:h-96 flex flex-col rounded-lg border border-ox-gray bg-ox-black-1 relative lg:absolute lg:right-20">
         <div className="flex h-8 lg:h-[10%] border-b border-ox-gray justify-between items-center px-4">
           <h1 className="text-sm text-ox-purple font-semibold">Filters</h1>
           <IconWrapper>
-            <XMarkIcon
-              className="size-5 lg:size-4 text-ox-purple"
-              onClick={() => toggleShowFilters()}
-            />
+            <XMarkIcon className="size-5 lg:size-4 text-ox-purple" onClick={() => toggleShowFilters()} />
           </IconWrapper>
         </div>
 
@@ -95,38 +86,15 @@ export default function FiltersContainer() {
                 "Html",
                 "Elixir",
               ]}
+              multiple={true}
             />
-            <Filter
-              filterName="Popularity"
-              filters={["Very low", "Low", "Moderate", "High", "Very high"]}
-            />
-            <Filter
-              filterName="Competition"
-              filters={["Very low", "Low", "Moderate", "High", "Very high"]}
-            />
-            <Filter
-              filterName="Stage"
-              filters={["Very early", "Early", "Emerging", "Established"]}
-            />
-            <Filter
-              filterName="Activity"
-              filters={["Highest", "High", "Normal", "Low"]}
-            />
-            <Filter
-              filterName="Hire contributors"
-              filters={[]}
-              onClick={handleClickWipFilters}
-            />
-            <Filter
-              filterName="Funding"
-              filters={[]}
-              onClick={handleClickWipFilters}
-            />
-            <Filter
-              filterName="Trending"
-              filters={[]}
-              onClick={handleClickWipFilters}
-            />
+            <Filter filterName="Popularity" filters={["Very low", "Low", "Moderate", "High", "Very high"]} />
+            <Filter filterName="Competition" filters={["Very low", "Low", "Moderate", "High", "Very high"]} />
+            <Filter filterName="Stage" filters={["Very early", "Early", "Emerging", "Established"]} />
+            <Filter filterName="Activity" filters={["Highest", "High", "Normal", "Low"]} />
+            <Filter filterName="Hire contributors" filters={[]} onClick={handleClickWipFilters} />
+            <Filter filterName="Funding" filters={[]} onClick={handleClickWipFilters} />
+            <Filter filterName="Trending" filters={[]} onClick={handleClickWipFilters} />
           </Accordion>
         </div>
 
