@@ -210,6 +210,12 @@ export default function SheetPage() {
         <ProgressBar completed={completedCount} total={totalModules} />
       </div>
 
+      <div className="mb-6 flex-shrink-0">
+        <p className="text-white text-sm italic">
+          &quot;sometimes, these modules may feel boring and hard af but that&apos;s the cost of learning something worthy. you go through it. you win. simple.&quot; — ajeet
+        </p>
+      </div>
+
       <div
         className="
           w-full bg-ox-content border border-ox-header rounded-lg
