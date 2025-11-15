@@ -76,31 +76,44 @@ export default function ModuleDocPage() {
   const handleShare = async () => {
     const url = window.location.href;
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: currentModule?.name || "Module Documentation",
-          text: `Check out this module: ${currentModule?.name}`,
-          url: url,
-        });
-      } else {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
-    } catch {
-      // Fallback to clipboard if share fails
-      try {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch (clipboardErr) {
-        console.error("Failed to copy:", clipboardErr);
-      }
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (clipboardErr) {
+      console.error("Failed to copy:", clipboardErr);
     }
   };
 
   if (!currentModule) {
     notFound();
+  }
+
+  if (currentModule.comingSoon) {
+    return (
+      <div className="min-h-screen bg-ox-header text-white font-DMfont">
+        <div className="max-w-4xl mx-auto px-6 py-8">
+          <div className="mb-6">
+            <Link
+              href="/dashboard/sheet"
+              className="inline-flex items-center gap-2 text-ox-purple hover:text-ox-purple-2 transition-colors mb-4"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Back to Sheet</span>
+            </Link>
+            <h1 className="text-3xl font-bold text-white mb-2">{currentModule.name}</h1>
+          </div>
+
+          <div className="bg-ox-content rounded-lg p-8 border border-ox-header text-center">
+            <Badge className="bg-ox-purple/20 text-ox-purple border-ox-purple/30 mb-4">
+              Coming Soon
+            </Badge>
+            <p className="text-gray-300 text-lg">
+              This module is coming very soon. Stay tuned!
+            </p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

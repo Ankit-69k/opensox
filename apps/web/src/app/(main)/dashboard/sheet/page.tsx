@@ -154,26 +154,11 @@ export default function SheetPage() {
   const handleShare = async () => {
     const url = window.location.href;
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: "30 days of Open Source sheet",
-          text: "Check out my progress on the Open Source sheet!",
-          url: url,
-        });
-      } else {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
-    } catch {
-      // Fallback to clipboard if share fails
-      try {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch (clipboardErr) {
-        console.error("Failed to copy:", clipboardErr);
-      }
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (clipboardErr) {
+      console.error("Failed to copy:", clipboardErr);
     }
   };
 
@@ -258,44 +243,71 @@ export default function SheetPage() {
           <TableBody>
             {sheetModules.map((module, index) => {
               const isCompleted = completedSteps.includes(module.id);
+              const isComingSoon = module.comingSoon === true;
               return (
                 <TableRow
                   key={module.id}
-                  className="border-y border-ox-sidebar bg-ox-content hover:bg-ox-sidebar transition-colors"
+                  className={`border-y border-ox-sidebar bg-ox-content hover:bg-ox-sidebar transition-colors ${
+                    isComingSoon ? "opacity-50" : ""
+                  }`}
                 >
                   <TableCell className="text-white text-[12px] sm:text-sm p-3 text-left">
-                    {index + 1}
+                    {index}
                   </TableCell>
 
                   <TableCell className="text-white text-[12px] sm:text-sm p-3">
-                    {module.name}
+                    <div className="flex items-center gap-2">
+                      <span>{module.name}</span>
+                      {isComingSoon && (
+                        <Badge className="bg-ox-purple/20 text-ox-purple border-ox-purple/30 text-[10px] px-2 py-0.5">
+                          Coming Soon
+                        </Badge>
+                      )}
+                    </div>
                   </TableCell>
 
                   <TableCell className="text-center p-3">
-                    <Link
-                      href={`/sheet/${module.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-white hover:text-ox-purple transition-colors"
-                    >
-                      <FileText className="h-4 w-4" />
-                      <span className="text-[12px] sm:text-sm font-medium">
-                        read
+                    {isComingSoon ? (
+                      <span className="inline-flex items-center gap-1 text-gray-500 cursor-not-allowed pointer-events-none">
+                        <FileText className="h-4 w-4" />
+                        <span className="text-[12px] sm:text-sm font-medium">
+                          read
+                        </span>
                       </span>
-                    </Link>
+                    ) : (
+                      <Link
+                        href={`/sheet/${module.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-white hover:text-ox-purple transition-colors"
+                      >
+                        <FileText className="h-4 w-4" />
+                        <span className="text-[12px] sm:text-sm font-medium">
+                          read
+                        </span>
+                      </Link>
+                    )}
                   </TableCell>
 
                   <TableCell className="text-center p-3">
-                    <Link
-                      href={module.videoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center hover:opacity-80 transition-opacity"
-                    >
-                      <span className="w-5 h-5 inline-flex items-center justify-center [&_svg_path]:fill-red-500">
-                        <Youtube />
+                    {isComingSoon ? (
+                      <span className="inline-flex items-center justify-center opacity-50 cursor-not-allowed pointer-events-none">
+                        <span className="w-5 h-5 inline-flex items-center justify-center [&_svg_path]:fill-gray-500">
+                          <Youtube />
+                        </span>
                       </span>
-                    </Link>
+                    ) : (
+                      <Link
+                        href={module.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center hover:opacity-80 transition-opacity"
+                      >
+                        <span className="w-5 h-5 inline-flex items-center justify-center [&_svg_path]:fill-red-500">
+                          <Youtube />
+                        </span>
+                      </Link>
+                    )}
                   </TableCell>
 
                   <TableCell className="text-center p-3">
@@ -309,7 +321,8 @@ export default function SheetPage() {
                         onCheckedChange={(checked) =>
                           handleCheckboxChange(module.id, checked === true)
                         }
-                        className="border-ox-purple/50 data-[state=checked]:bg-ox-purple data-[state=checked]:border-ox-purple data-[state=checked]:text-white"
+                        disabled={isComingSoon}
+                        className="border-ox-purple/50 data-[state=checked]:bg-ox-purple data-[state=checked]:border-ox-purple data-[state=checked]:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                       />
                     </div>
                   </TableCell>

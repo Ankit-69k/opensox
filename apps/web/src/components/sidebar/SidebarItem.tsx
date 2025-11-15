@@ -21,9 +21,9 @@ export default function SidebarItem({ itemName, onclick, icon, collapsed = false
       {icon && <span className="shrink-0 text-[#eaeaea]">{icon}</span>}
       {!collapsed && (
         <div className="flex items-center gap-1.5">
-          <h1 className="text-xs font-medium text-[#c8c8c8] group-hover:text-ox-purple">
-            {itemName}
-          </h1>
+        <h1 className="text-xs font-medium text-[#c8c8c8] group-hover:text-ox-purple">
+          {itemName}
+        </h1>
           {badge}
         </div>
       )}

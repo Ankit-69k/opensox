@@ -149,8 +149,8 @@ export default function Sidebar() {
             itemName="Opensox Pro"
             onclick={proClickHandler}
             icon={<StarIcon className="size-5" />}
-            collapsed={isCollapsed}
-          />
+          collapsed={isCollapsed}
+        />
         )}
       </div>
 
