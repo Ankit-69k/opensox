@@ -244,17 +244,18 @@ Keep your API keys secure:
 
 ```bash
 # ❌ NEVER do this
-const apiKey = 'sk_live_abc123xyz';
+const apiKey = "YOUR_PRODUCTION_API_KEY_HERE";
 
 # ✅ Use environment variables
 const apiKey = process.env.OPENSOX_API_KEY;
+
 ```
 
 Create a secure `.env` file:
 
 ```bash
 # .env
-OPENSOX_API_KEY=sk_live_your_secret_key_here
+OPENSOX_API_KEY=YOUR_SECRET_API_KEY_HERE
 DATABASE_URL=postgresql://user:pass@localhost:5432/db
 JWT_SECRET=your-super-secret-jwt-key-min-32-chars
 ```

@@ -30,7 +30,10 @@ export function getAllNewsletters(): NewsletterProps[] {
         id: slug,
         slug,
         title: data.title || slug,
-        date: data.date ? new Date(data.date) : new Date(),
+        date:
+          data.date && !isNaN(new Date(data.date).getTime())
+            ? new Date(data.date)
+            : new Date(),
         excerpt: data.excerpt || content.slice(0, 150) + "...",
         content,
       } as NewsletterProps;
@@ -59,8 +62,14 @@ export function getNewsletter(slug: string): NewsletterProps | null {
       id: slug,
       slug,
       title: data.title || slug,
-      date: data.date ? new Date(data.date) : new Date(),
-      excerpt: data.excerpt || content.slice(0, 150) + "...",
+      date:
+        data.date && !isNaN(new Date(data.date).getTime())
+          ? new Date(data.date)
+          : new Date(),
+      excerpt:
+        data.excerpt ||
+        (content.length > 150 ? content.slice(0, 150) + "..." : content.trim()),
+
       content,
     } as NewsletterProps;
   } catch (error) {

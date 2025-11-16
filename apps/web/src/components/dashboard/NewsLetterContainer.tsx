@@ -46,7 +46,7 @@ export default function NewsLetterContainer({
     const years = new Set<number>();
     newsletters.forEach((n) => years.add(new Date(n.date).getFullYear()));
     return [...years].sort((a, b) => b - a);
-  }, []);
+  }, [newsletters]);
 
   const filteredNewsletters = useMemo(() => {
     return newsletters.filter((newsletter) => {
@@ -60,7 +60,7 @@ export default function NewsLetterContainer({
       const text = `${newsletter.title} ${newsletter.excerpt}`.toLowerCase();
       return text.includes(searchTerm.toLowerCase());
     });
-  }, [searchTerm, selectedMonth, selectedYear]);
+  }, [newsletters, searchTerm, selectedMonth, selectedYear]);
 
   const grouped = useMemo(() => {
     const groups: Record<string, { label: string; items: typeof newsletters }> =
@@ -75,9 +75,11 @@ export default function NewsLetterContainer({
       groups[key].items.push(item);
     });
 
-    return Object.values(groups).sort(
-      (a, b) => new Date(b.label).getTime() - new Date(a.label).getTime()
-    );
+    return Object.values(groups).sort((a, b) => {
+      const dateA = new Date(a.items[0].date).getTime();
+      const dateB = new Date(b.items[0].date).getTime();
+      return dateB - dateA;
+    });
   }, [filteredNewsletters]);
 
   if (subscriptionLoading)
@@ -111,7 +113,7 @@ export default function NewsLetterContainer({
           {/* Year Filter */}
           <Select
             value={selectedYear === "all" ? "all" : String(selectedYear)}
-            onValueChange={(val) =>
+            onValueChange={(val: string) =>
               setSelectedYear(val === "all" ? "all" : Number(val))
             }
           >
@@ -131,7 +133,7 @@ export default function NewsLetterContainer({
           {/* Month Filter */}
           <Select
             value={selectedMonth === "all" ? "all" : String(selectedMonth)}
-            onValueChange={(val) =>
+            onValueChange={(val: string) =>
               setSelectedMonth(val === "all" ? "all" : Number(val))
             }
           >

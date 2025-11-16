@@ -3,8 +3,8 @@ import { getAllNewsletters } from "@/utils/getMarkdownNewsletter";
 
 import React from "react";
 
-function NewsletterPage() {
-  const newsletters = getAllNewsletters();
+async function NewsletterPage() {
+  const newsletters = await getAllNewsletters();
   return (
     <div className=" ">
       <NewsLetterContainer newsletters={newsletters} />

@@ -1,5 +1,3 @@
-import { JSONContent } from "@tiptap/react";
-
 export type NewsletterProps = {
   id: string;
   title: string;
