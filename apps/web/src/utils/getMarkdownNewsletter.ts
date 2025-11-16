@@ -49,7 +49,9 @@ export function getAllNewsletters(): NewsletterProps[] {
 
 export function getNewsletter(slug: string): NewsletterProps | null {
   try {
-    const fullPath = path.join(newsletterPath, `${slug}.md`);
+    // Sanitize slug to prevent path traversal
+    const sanitizedSlug = path.basename(slug);
+    const fullPath = path.join(newsletterPath, `${sanitizedSlug}.md`);
 
     if (!fs.existsSync(fullPath)) {
       return null;
